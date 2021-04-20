@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi perfil- TicoRides</title>
+    <script type="text/javascript" src="./code.js"></script>
+    <link rel="stylesheet" href="./estilos.css">
+    <script>
+        function cargarPerfilUsuario(){
+            if (sessionStorage.getItem("username")==null) {
+                window.location.href="login.html";
+            } else {
+                var usuarioBuscar = sessionStorage.getItem("username") + ".config";
+                var oUsario = JSON.parse(localStorage.getItem(usuarioBuscar));
+                document.getElementById("name").value = oUsario.nombrecompleto;
+                document.getElementById("speed").value = oUsario.velocidadpromedio;
+                document.getElementById("about_me").value = oUsario.descripcion;
+                cargarRidesTabla();
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded",function(e){
+            cargarNombreUsuario();
+        });
+
+        function cargarNombreUsuario() {
+            document.getElementById("labelBienvenido").innerHTML = "Bienvenido (a) " + sessionStorage.getItem("username");
+            cargarPerfilUsuario();
+        }
+
+        function cargarRidesTabla() {
+            var rides = [];
+            var claves = [];
+            var i;
+            for (i=0; i<localStorage.length;i++) {
+                try {
+                    var clave = localStorage.key(i);
+                    var ride = JSON.parse(localStorage.getItem(clave));
+                    if (ride.usuario == sessionStorage.getItem("username") && ride.contrasena==undefined) {
+                        if (rides.length == 0) {
+                            rides[0] = ride;
+                            claves[0] = clave;
+                        } else {
+                            rides.push(ride);
+                            claves.push(clave);
+                        }
+                    }
+                } catch {}
+            }
+            if (rides.length > 0) {
+                var fila="<tr></tr>";
+                var j=0;
+                for(j=0; j < rides.length; j++) {
+                    fila = fila.substring(0,fila.length-5) + "<td>" + claves[j] + "</td>" + "<td>" + rides[j].inicio + "</td>" + "<td>" + rides[j].fin + "</td>" + "<td>" + rides[j].horaSalida + "</td>" + "<td>" + rides[j].horaLlegada + "</td>" + fila.substring(fila.length-5);
+                    var tblFila = document.createElement("tr");
+                    tblFila.innerHTML = fila;
+                    document.getElementById("tbl_rides_us").appendChild(tblFila);
+                    fila="<tr></tr>";
+                }
+            } 
+        }
+    </script>
+</head>
+<!-- Página que muestra las opciones una vez ha ingresado el usuario -->
+
+<body>
+    <div style="max-width: 700px; align-items: right; margin: auto; margin-top: 10px;">    
+        <div align="right">
+            <form action="login.html">
+                <input type="submit" style="margin-left: 10px; float: right;" value="Salir" />
+            </form>
+        </div>
+
+        <div align="right">
+            <span><p id="labelBienvenido">Bienvenido @user</p></span>
+            <img src="images/perfil.jpg" width="40" height="40">
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="lbl-menu">
+            <label for="radio1">Dashboard</label>
+            <label for="radio2">Rides</label>
+            <label for="radio3">Configuración</label>
+        </div>
+
+        <div class="content" style="width: 100%;">
+
+            <input type="radio" name="radio" id="radio1" checked>
+            <div class="tab1" id="principal" style="width: 100%;">
+                <h2>Mis viajes</h2>
+                <p>Tu lista actual de rides:</p>
+                <table border="2" align="center">
+                    <thead>
+                        <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Inicio</th>
+                            <th scope="col">Fin</th>
+                            <th scope="col">Hora de salida</th>
+                            <th scope="col">Hora de llegada</th>
+                        </tr>
+                    </thead>
+                    <tbody align="center" id="tbl_rides_us">
+                    </tbody>
+                </table>
+            </div>
+
+            <input type="radio" name="radio" id="radio2">
+            <div class="tab2">
+                <form action="ride_options.html">
+                    <input type="submit" value="Opciones" />
+                </form>
+            </div>
+
+            <input type="radio" name="radio" id="radio3">
+            <div class="tab3">
+                <h2>Configuración</h2>
+                <form method="">
+                    <p>Nombre:</p>
+                    <Input type="text" id="name" />
+                    <br>
+                    <p>Velocidad promedio:</p>
+                    <Input type="text" id="speed" />
+                    <br>
+                    <p>Acerca de mi:</p>
+                    <textarea id="about_me"></textarea>
+                    <br>
+                    <Input type="submit" onclick = "actualizarPerfil()" value="Guardar" />
+                    <br>
+                    <a href="options.html">Cancelar</a>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rides</title>
+    <link rel="stylesheet" href="./estilos.css">
+    <script src="code.js" language="javascript" type="text/javascript"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded",function(e){
+            cargarRides()
+        });
+
+        function cargarRides() {
+            var rides = [];
+            var i;
+            for (i=0; i<localStorage.length;i++) {
+                try {
+                    var clave = localStorage.key(i);
+                    var ride = JSON.parse(localStorage.getItem(clave));
+                    if (localStorage.getItem("inicio") == "--" && localStorage.getItem("fin") == "--") {
+                        if (ride.nombrecompleto == undefined && ride.contrasena == undefined) {
+                            if (rides.length == 0) {
+                                rides[0] = ride;
+                            } else {
+                                rides.push(ride);
+                            }
+                        }
+                    } else {
+                        if (localStorage.getItem("inicio") == "--") {
+                            if (ride.fin == localStorage.getItem("fin")) {
+                                if (ride.nombrecompleto == undefined && ride.contrasena == undefined) {
+                                    if (rides.length == 0) {
+                                        rides[0] = ride;
+                                    } else {
+                                        rides.push(ride);
+                                    }
+                                }
+                            }
+                        } else {
+                            if (localStorage.getItem("fin") == "--") {
+                                if (ride.inicio == localStorage.getItem("inicio")) {
+                                    if (ride.nombrecompleto == undefined && ride.contrasena == undefined) {
+                                        if (rides.length == 0) {
+                                            rides[0] = ride;
+                                        } else {
+                                            rides.push(ride);
+                                        }
+                                    }
+                                }
+                            } else {
+                                if (ride.inicio == localStorage.getItem("inicio") && ride.fin == localStorage.getItem("fin")) {
+                                    if (ride.nombrecompleto == undefined && ride.contrasena == undefined) {
+                                        if (rides.length == 0) {
+                                            rides[0] = ride;
+                                        } else {
+                                            rides.push(ride);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } catch {}
+            }
+            if (rides.length > 0) {
+                var fila="<tr></tr>";
+                var j=0;
+                for(j=0; j < rides.length; j++) {
+                    var dias = "";
+                    if (rides[j].lunes) {
+                        dias += "L ";
+                        if (rides[j].martes) {
+                            dias += " - K";
+                            if (rides[j].miercoles) {
+                                dias += " - M";
+                                if (rides[j].jueves) {
+                                    dias += " - J";
+                                    if (rides[j].viernes) {
+                                        dias += " - V";
+                                        if (rides[j].sabado) {
+                                            dias += " - S";
+                                            if (rides[j].domingo) {
+                                                dias += " - D"
+                                            }
+                                        } else {
+                                            if (rides[j].domingo) {
+                                                dias += " - D"
+                                            }
+                                        }
+                                    } else {
+                                        if (rides[j].sabado) {
+                                            dias += " - S";
+                                        } else {
+                                            if (rides[j].domingo) {
+                                                dias += " - D"
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (rides[j].viernes) {
+                                        dias += " - V";
+                                    } else {
+                                        if (rides[j].sabado) {
+                                            dias += " - S";
+                                        } else {
+                                            if (rides[j].domingo) {
+                                                dias += " - D"
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                if (ride[j].jueves) {
+                                    dias += " - J";
+                                } else {
+                                    if (rides[j].viernes) {
+                                        dias += " - V";
+                                    } else {
+                                        if (rides[j].sabado) {
+                                            dias += " - S";
+                                        } else {
+                                            if (rides[j].domingo) {
+                                                dias += " - D"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            if (rides[j].miercoles) {
+                                dias += " - M";
+                            } else {
+                                if (ride[j].jueves) {
+                                    dias += " - J";
+                                } else {
+                                    if (rides[j].viernes) {
+                                        dias += " - V";
+                                    } else {
+                                        if (rides[j].sabado) {
+                                            dias += " - S";
+                                        } else {
+                                            if (rides[j].domingo) {
+                                                dias += " - D"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        if (rides[j].martes) {
+                            dias += "K ";
+                            if (rides[j].miercoles) {
+                                dias += " - M";
+                                if (rides[j].jueves) {
+                                    dias += " - J";
+                                    if (rides[j].viernes) {
+                                        dias += " - V";
+                                        if (rides[j].sabado) {
+                                            dias += "- S";
+                                            if (rides[j].domingo) {
+                                                dias += " - D"
+                                            }
+                                        } else {
+                                            if (rides[j].domingo) {
+                                                dias += "D"
+                                            }
+                                        }
+                                    } else {
+                                        if (rides[j].sabado) {
+                                            dias += "S";
+                                        } else {
+                                            if (rides[j].domingo) {
+                                                dias += "D"
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (rides[j].viernes) {
+                                        dias += "V";
+                                    } else {
+                                        if (rides[j].sabado) {
+                                            dias += "S";
+                                        } else {
+                                            if (rides[j].domingo) {
+                                                dias += "D"
+                                            }
+                                        }
+                                    }
+                                }
+                            } else {
+                                if (rides[j].jueves) {
+                                    dias += "J";
+                                } else {
+                                    if (rides[j].viernes) {
+                                        dias += "V";
+                                    } else {
+                                        if (rides[j].sabado) {
+                                            dias += "S";
+                                        } else {
+                                            if (rides[j].domingo) {
+                                                dias += "D"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        } else {
+                            if (rides[j].miercoles) {
+                                dias += "M";
+                            } else {
+                                if (rides[j].jueves) {
+                                    dias += "J";
+                                    if (rides[j].viernes) {
+                                        dias += " - V";
+                                    } else {
+                                        if (rides[j].sabado) {
+                                            dias += "S";
+                                            if (rides[j].domingo) {
+                                                dias += " - D"
+                                            }
+                                        } else {
+                                            if (rides[j].domingo) {
+                                                dias += "D"
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    if (rides[j].viernes) {
+                                        dias += "V";
+                                    } else {
+                                        if (rides[j].sabado) {
+                                            dias += "S";
+                                            if (rides[j].domingo) {
+                                                dias += " - D"
+                                            }
+                                        } else {
+                                            if (rides[j].domingo) {
+                                                dias += "D"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    fila = fila.substring(0,fila.length-5) + "<td>" + rides[j].usuario + "</td>" + "<td>" + rides[j].descripcion + "</td>" + "<td>" + rides[j].inicio + "</td>" + "<td>" + rides[j].fin + "</td>" + "<td>" + rides[j].horaSalida + "</td>" + "<td>" + rides[j].horaLlegada + "</td>" + "<td>" + dias + "</td>" + fila.substring(fila.length-5);
+                    var tblFila = document.createElement("tr");
+                    tblFila.innerHTML = fila;
+                    document.getElementById("tbl_rides_pub").appendChild(tblFila);
+                    fila="<tr></tr>";
+                }
+            }
+        }
+    </script>
+</head>
+<!-- Página que muestra los resultados de la búsqueda de rides -->
+
+<body>
+    <br>
+    <div class="titulos">
+        <h2 align="center">
+            <b>Rides</b>
+        </h2>
+    </div>
+    <br>
+    <div align="center"><img src="images/fortuna.jpg" width="1350" height="300" border="1px" solid=#9c9c9c;></div>
+    <br>
+    <div align="center">
+        <table border="2" align="center">
+            <thead>
+                <tr>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Inicio</th>
+                    <th scope="col">Fin</th>
+                    <th scope="col">Hora de salida</th>
+                    <th scope="col">Hora de llegada</th>
+                    <th scope="col">Días</th>
+                </tr>
+            </thead>
+            <tbody align="center" id="tbl_rides_pub">
+            </tbody>
+        </table>
+    </div>
+    <br>
+    <form action="public.html">
+        <input type="submit" value="Regresar" />
+    </form>
+    <br>
+</body>
+
+</html>

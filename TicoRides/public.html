@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicoRides</title>
+    <link rel="stylesheet" href="./estilos.css">
+    <script src="code.js" language="javascript" type="text/javascript"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded",function(e){
+            cargarOrigenesDisponibles();
+            cargarDestinosDisponibles();
+        });
+
+        function cargarOrigenesDisponibles() {
+            var lugares = ["--"];
+            var i=0;
+            for (i=0; i<localStorage.length;i++) {
+                try {
+                    var clave = localStorage.key(i);
+                    var ride = JSON.parse(localStorage.getItem(clave));
+                    if (ride.contrasena==undefined && ride.nombrecompleto == undefined) {
+                        var j=0;
+                        var existe = false;
+                        for (j=0; j<lugares.length; j++) {
+                            if (ride.inicio == lugares[j]) {
+                                existe = true;
+                                break;
+                            }
+                        }
+                        if (!existe) {
+                            lugares.push(ride.inicio);
+                        }
+                    }
+                } catch {}
+            }
+            agregarRides("Origen_rides",lugares);
+        }
+
+        function cargarDestinosDisponibles() {
+            var lugares = ["--"];
+            var i=0;
+            for (i=0; i<localStorage.length;i++) {
+                try {
+                    var clave = localStorage.key(i);
+                    var ride = JSON.parse(localStorage.getItem(clave));
+                    if (ride.contrasena==undefined && ride.nombrecompleto == undefined) {
+                        var j=0;
+                        var existe = false;
+                        for (j=0; j<lugares.length; j++) {
+                            if (ride.fin == lugares[j]) {
+                                existe = true;
+                                break;
+                            }
+                        }
+                        if (!existe) {
+                            lugares.push(ride.fin);
+                        }     
+                    }
+                } catch {}
+            }
+            agregarRides("Destino_rides",lugares);
+        }
+
+        function agregarRides(domElement, array) {
+            var select = document.getElementsByName(domElement)[0];
+            for (value in array) {
+                var option = document.createElement("option");
+                option.text = array[value];
+                select.add(option);
+            }
+        }
+    </script>
+</head>
+<!-- Página principal de TicoRides -->
+
+<body>
+    <br>
+    <form action="login.html" align="right">
+        <input type="submit" value="Login" />
+    </form>
+    <br>
+    <div class="titulos">
+        <h2 align="center">
+            <b>Bienvenido a TicoRides</b>
+        </h2>
+    </div>
+    <br>
+    <div align="center"><img src="images/portada.jpg" width="1350" height="300" border="1px" solid=#9c9c9c;></div>
+    <br>
+    <fieldset class="busqueda">
+        <legend>Seleccione el ride</legend>
+        <br>
+        <div class="busqueda">
+            <label for="Origen">Origen:</label>
+            <select name="Origen_rides" id="Origen_viajes" aling="center">
+            </select>
+            <label for="Destino">Destino:</label>
+            <select name="Destino_rides" id="Destino_viajes" aling="center">
+            </select>
+            <a class="button" href="rides.html" class="btn btn-success" onclick="busqueda()">Buscar</a>
+            <br>
+            <br>
+        </div>
+    </fieldset>
+</body>
+
+</html>

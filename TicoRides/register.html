@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TicoRides - Registrarse</title>
+    <script type="text/javascript" src="./code.js"></script>
+    <link rel="stylesheet" href="./estilos.css">
+</head>
+<!-- Página para crearse una cuenta en TicoRides -->
+
+<body>
+    <br>
+    <form action="public.html" align="right">
+        <input type="submit" value="Principal" />
+    </form>
+    <br>
+    <div class="titulos">
+        <h2 align="center">
+            <b>Registrarse en TicoRides</b>
+        </h2>
+    </div>
+    <br>
+    <div align="center">
+        <form id="registro_usuarios" action="login.html">
+            <p><b>Nombre:</b></p>
+            <Input type="text" id="name" required/>
+            <br>
+            <br>
+            <p><b>Apellidos:</b></p>
+            <Input type="text" id="lastname" required/>
+            <br>
+            <br>
+            <p><b>Usuario:</b></p>
+            <Input type="text" id="username" required/>
+            <br>
+            <br>
+            <p><b>Contraseña</b></p>
+            <Input type="password" id="password" required/>
+            <br>
+            <br>
+            <p><b>Confirmar contraseña:</b></p>
+            <Input type="password" id="repit_password" required/>
+            <br>
+            <br>
+            <Input type="submit" value="Registrarse" id="boton_registrar"/>
+            <br>
+            <br>
+        </form>
+        <p>¿Ya es usuario? <a href="login.html">Ingresar</a></p>
+    </div>
+</body>
+
+</html>

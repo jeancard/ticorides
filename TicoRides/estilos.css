@@ -1,0 +1,184 @@
+.parametros {
+    display: inline-flex;
+    width: 20%;
+    float: right;
+}
+
+.busqueda {
+    align-items: center;
+    justify-content: center;
+}
+
+fieldset {
+    display: inline-flexbox;
+    text-align: center;
+}
+
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+    text-decoration: none;
+    color: initial;
+}
+
+.mismalinea {
+    display: inline-flex;
+    width: 10%;
+    align-items: right;
+}
+
+.parametros>p {
+    margin: 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 95%;
+    height: 300px;
+}
+
+.form {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.form input {
+    width: 90%;
+    height: 30px;
+    margin: 0.5rem;
+}
+
+.form button {
+    padding: 0.5em 1em;
+    border: none;
+    background: rgb(100, 200, 255);
+    cursor: pointer;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    background: #f0f0f0;
+}
+
+.container {
+    width: 100%;
+    max-width: 700px;
+    margin: auto;
+    margin-top: 100px;
+}
+
+.titulos {
+    width: 100%;
+    height: 50px;
+    margin: auto;
+    background: #234;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+}
+
+.lbl-menu {
+    background: #234;
+}
+
+.lbl-menu label {
+    display: inline-block;
+    padding: 20px;
+    color: #fff;
+    cursor: pointer;
+    transition: all 400ms ease;
+}
+
+.lbl-menu label:hover {
+    background: #28435d;
+}
+
+.content {
+    position: relative;
+}
+
+.content div {
+    position: absolute;
+    line-height: 1.8;
+    transition: all 600ms ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.90);
+    padding: 30px;
+    background: #fff;
+    padding-bottom: 40px;
+}
+
+#radio1,
+#radio2,
+#radio3,
+#radio4,
+#radio5,
+#radio6 {
+    display: none;
+}
+
+#radio1:checked~.tab1,
+#radio2:checked~.tab2,
+#radio3:checked~.tab3,
+#radio4:checked~.tab3,
+#radio5:checked~.tab3,
+#radio6:checked~.tab3 {
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1);
+}
+
+.content div:after {
+    position: absolute;
+    content: "";
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid #fff;
+    bottom: 100%;
+    left: 28px;
+}
+
+.content .tab2:after {
+    left: 122px;
+}
+
+.content .tab3:after {
+    left: 210px;
+}
+
+.content .add:after {
+    left: 210px;
+}
+
+@media only screen and (min-width:320px) and (max-width:768px) {
+    .container {
+        width: 90%;
+    }
+}
+
+#tab1 {
+    text-align: center;
+}
+
+.buttonmap {
+    background-image: url("./estilos.css");
+    background-repeat: no-repeat;
+    height: 20px;
+    width: 20px;
+    background-position: center;
+}

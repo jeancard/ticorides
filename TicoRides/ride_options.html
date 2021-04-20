@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opciones de viajes- TicoRides</title>
+    <script type="text/javascript" src="./code.js"></script>
+    <link rel="stylesheet" href="./estilos.css">
+    <script>
+        function cargarPerfilUsuario(){
+            if (sessionStorage.getItem("username")==null) {
+                window.location.href="options.html";
+            } else {
+
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded",function(e){
+            cargarNombreUsuario();
+        });
+
+        function cargarNombreUsuario() {
+            document.getElementById("labelBienvenidoRides").innerHTML = "Bienvenido (a) " + sessionStorage.getItem("username");
+            cargarPerfilUsuario();
+        }
+
+        function cargarRides() {
+            var rides = [];
+            var i;
+            for (i=0; i<localStorage.length;i++) {
+                try {
+                    var clave = localStorage.key(i);
+                    var ride = JSON.parse(localStorage.getItem(clave));
+                    if (ride.usuario == sessionStorage.getItem("username") && ride.contrasena==undefined) {
+                        if (rides.length == 0) {
+                            rides[0] = clave;
+                        } else {
+                            rides.push(clave);
+                        }
+                    }
+                } catch {}
+            }
+            agregarRides("editar_viajes",rides);
+            agregarRides("eliminar_viajes",rides);
+        }
+
+        function agregarRides(domElement, array) {
+            var select = document.getElementsByName(domElement)[0];
+            for (value in array) {
+                var option = document.createElement("option");
+                option.text = array[value];
+                select.add(option);
+            }
+        }
+    </script>
+</head>
+<!-- Página que muestra las opciones para Agrega, Editar o Eliminar un ride -->
+
+<body onload="cargarRides()">
+    <div class="parametros">
+        <p id="labelBienvenidoRides">Bienvenido @user</p>
+        <img src="images/perfil.jpg" width="40" height="40">
+    </div>
+
+    <div class="mismalinea">
+        <a href="options.html" align="right">Volver</a>
+    </div>
+
+    <div class="container">
+        <div class="lbl-menu">
+            <label for="radio1">Agregar</label>
+            <label for="radio2">Editar</label>
+            <label for="radio3">Eliminar</label>
+        </div>
+
+        <div class="content">
+
+            <input type="radio" name="radio" id="radio1" checked>
+            <div class="tab1" id="principal">
+                <h2>Agregar un viaje:</h2>
+                <br>
+                <form method="" id="agregar_ride">
+                    <p>Nombre del viaje:</p>
+                    <Input type="text" id="ridename" />
+                    <br>
+                    <p>Inicio:</p>
+                    <Input type="text" id="start" />
+                    <br>
+                    <p>Fin:</p>
+                    <Input type="text" id="end" />
+                    <br>
+                    <a class="buttonmap" href="location.html">Ver maps</a>
+                    <br>
+                    <p>Descripción:</p>
+                    <textarea id="description"></textarea>
+                    <br>
+                    <fieldset>
+                        <legend>Salida y llegada:</legend>
+                        <p>Salida</p>
+                        <input type="time" id="start_time">
+                        <br>
+                        <p>Llegada estimada:</p>
+                        <input type="time" id="end_time">
+                        <br>
+                    </fieldset>
+                    <br>
+                    <fieldset>
+                        <legend>Días:</legend>
+                        <input type="checkbox" id="cbLunes" value="Lunes"> Lunes <br>
+                        <input type="checkbox" id="cbMartes" value="Martes"> Martes <br>
+                        <input type="checkbox" id="cbMiercoles" value="Miércoles"> Miércoles <br>
+                        <input type="checkbox" id="cbJueves" value="Jueves"> Jueves <br>
+                        <input type="checkbox" id="cbViernes" value="Viernes"> Viernes <br>
+                        <input type="checkbox" id="cbSabado" value="Sábado"> Sábado <br>
+                        <input type="checkbox" id="cbDomingo" value="Domingo"> Domingo <br>
+                    </fieldset>
+                    <br>
+                    <Input type="submit" onclick="guardarRide()" value="Guardar" />
+                    <br>
+                    <br>
+                    <a href="ride_options.html">Cancelar</a>
+                    <br>
+                </form>
+            </div>
+
+            <input type="radio" name="radio" id="radio2">
+            <div class="tab2">
+                <h2>Editar un viaje:</h2>
+                <p>Seleccione un viaje para editar:</p>
+                <select name="editar_viajes" id="editar_rides" onclick="cargarInfoRide()">
+                </select>
+                <br>
+                <br>
+                <form method="" id="form_editar">
+                    <p>Inicio:</p>
+                    <Input type="text" id="start_edit"/>
+                    <br>
+                    <p>Fin:</p>
+                    <Input type="text" id="end_edit"/>
+                    <br>
+                    <a class="buttonmap" href="location.html">Ver maps</a>
+                    <br>
+                    <p>Descripción:</p>
+                    <textarea id="description_edit"></textarea>
+                    <br>
+                    <fieldset>
+                        <legend>Salida y llegada:</legend>
+                        <p>Salida</p>
+                        <input type="time" id="start_time_edit">
+                        <br>
+                        <p>Llegada estimada:</p>
+                        <input type="time" id="end_time_edit">
+                        <br>
+                    </fieldset>
+                    <br>
+                    <fieldset>
+                        <legend>Días:</legend>
+                        <input type="checkbox" id="lunes_edit" value="Lunes"> Lunes <br>
+                        <input type="checkbox" id="martes_edit" value="Martes"> Martes <br>
+                        <input type="checkbox" id="miercoles_edit" value="Miércoles"> Miércoles <br>
+                        <input type="checkbox" id="jueves_edit" value="Jueves"> Jueves <br>
+                        <input type="checkbox" id="viernes_edit" value="Viernes"> Viernes <br>
+                        <input type="checkbox" id="sabado_edit" value="Sábado"> Sábado <br>
+                        <input type="checkbox" id="domingo_edit" value="Domingo"> Domingo <br>
+                    </fieldset>
+                    <br>
+                    <Input type="submit" value="Guardar" onclick="editarRide()"/>
+                    <br>
+                    <br>
+                    <a href="ride_options.html">Cancelar</a>
+                    <br>
+                </form>
+            </div>
+
+            <input type="radio" name="radio" id="radio3">
+            <div class="tab3">
+                <h2>Eliminar un viaje</h2>
+                <br>
+                <p>Seleccione el viaje para eliminar:</p>
+                <br>
+                <select name="eliminar_viajes" id="eliminar_rides">
+                </select>
+                <br>
+                <br>
+                <Input type="submit" value="Eliminar" onclick="eliminarRide()"/>
+            </div>
+
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>
